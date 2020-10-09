@@ -1,4 +1,9 @@
-# Simple server for Raspberry Pi with Pimoroni Unicorn hat
+# Prince Picante
+an 8x8 led display for 3D printers using octoprint and unicorn hat
+
+forked from unicorn-busy-server
+
+## unicorn-busy-server: Simple server for Raspberry Pi with Pimoroni Unicorn hat
 
 * [Introduction](#Introduction)
 * [Installation](#Installation)
