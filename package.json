@@ -1,0 +1,30 @@
+{
+	"name": "prince-picante",
+	"version": "0.0.0",
+	"description": "an 8x8 led display for 3D printers using octoprint and unicorn hat",
+	"main": "server.js",
+	"directories": {
+		"lib": "lib"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "nodemon server.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/scotato/prince-picante.git"
+	},
+	"author": "Scott <scott@goldilocks.design>",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/scotato/prince-picante/issues"
+	},
+	"homepage": "https://github.com/scotato/prince-picante#readme",
+	"dependencies": {
+		"dotenv-defaults": "2.0.1",
+		"node-fetch": "2.6.1"
+	},
+	"devDependencies": {
+		"nodemon": "2.0.4"
+	}
+}
