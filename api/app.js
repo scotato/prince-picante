@@ -1,13 +1,18 @@
+const Prince = require('./prince')
+const Unicorn = require('./unicorn')
 const OctoPrint = require('./octoprint')
 
 class App {
-	constructor({ emitter, octoprint }) {
+	constructor({ emitter, octoprint, unicorn }) {
 		this.emitter = emitter
 		this.octoprint = octoprint
+		this.unicorn = unicorn
 	}
 
 	init() {
-		const { emitter, octoprint } = this
+		const { emitter, octoprint, unicorn } = this
+		this.Prince = new Prince({ emitter })
+		this.Unicorn = new Unicorn({ emitter, unicorn })
 		this.OctoPrint = new OctoPrint({ emitter, octoprint })
 	}
 

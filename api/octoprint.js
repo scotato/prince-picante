@@ -1,19 +1,21 @@
 const fetch = require('node-fetch')
 
-class App {
+class Octoprint {
 	constructor({ emitter, octoprint }) {
 		this.emitter = emitter
-		this.octoprint = octoprint
+		this.host = octoprint.host
+		this.key = octoprint.key
+		this.pollFrequency = 1000
 		this.init()
 	}
 
 	init() {
 		this.connect()
-		this.emitter.once('connected', () => {})
+		this.emitter.once('connected', () => this.poll())
 	}
 
 	connect() {
-		this.getJob()
+		this.api('version')
 			.then(() => this.emitter.emit('connected'))
 			.catch((err) => {
 				console.log(err.message)
@@ -22,19 +24,23 @@ class App {
 			})
 	}
 
-	getJob() {
-		return this.api('job').then((body) => console.log(body))
+	poll() {
+		setInterval(() => {
+			this.api('job').then((body) => this.emitter.emit('job', body))
+			this.api('printer').then((body) =>
+				this.emitter.emit('printer', body.state.flags)
+			)
+		}, this.pollFrequency)
 	}
 
 	api(type) {
-		const { host, key } = this.octoprint
-		return fetch(`${host}/api/${type}`, {
+		return fetch(`${this.host}/api/${type}`, {
 			headers: {
-				'X-Api-Key': key,
+				'X-Api-Key': this.key,
 				'Content-Type': 'application/json',
 			},
 		}).then((res) => res.json())
 	}
 }
 
-module.exports = App
+module.exports = Octoprint
