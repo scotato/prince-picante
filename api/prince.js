@@ -5,6 +5,7 @@ class Prince {
 		this.printer = {}
 		this.unicorn = {}
 		this.pollFrequency = 1000
+		this.completion = 0
 		this.init()
 	}
 
@@ -19,6 +20,15 @@ class Prince {
 		setInterval(() => {
 			const { printing } = this.printer
 			const { status } = this.unicorn
+			const { progress } = this.job
+
+			if (progress) {
+				const completion = Math.floor(progress.completion)
+				if (this.completion !== completion) {
+					this.completion = completion
+					console.log(this.completion)
+				}
+			}
 
 			if (printing && status && status !== 'rainbow') {
 				this.emitter.emit('rainbow')

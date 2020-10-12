@@ -138,7 +138,6 @@ def displayRainbow(brightness, speed, run=None):
 			for y in range(0, height):
 				r = 0  # x * 32
 				g = 0  # y * 32
-				xy = x + y / 4
 				r = (math.cos((x + i) / 2.0) + math.cos((y + i) / 2.0)) * 64.0 + 128.0
 				g = (math.sin((x + i) / 1.5) + math.sin((y + i) / 2.0)) * 64.0 + 128.0
 				b = (math.sin((x + i) / 2.0) + math.cos((y + i) / 1.5)) * 64.0 + 128.0
@@ -281,7 +280,23 @@ def apiDisplayRainbow():
 	globalLastCalledApi = '/api/rainbow'
 	switchOff()
 	data = request.get_data(as_text=True)
-	content = json.loads(jsmin(request.get_data(as_text=True)))
+	content = json.loads(jsmin(data))
+	brightness = content.get('brightness', None)
+	speed = content.get('speed', None)
+	blinkThread = threading.Thread(target=displayRainbow, args=(brightness, speed, None))
+	blinkThread.do_run = True
+	blinkThread.start()
+	setTimestamp()
+	return make_response(jsonify())
+
+@app.route('/api/progress', methods=['POST'])
+def apiDisplayProgress():
+	global blinkThread, globalStatus, globalLastCalledApi
+	globalStatus = 'progress'
+	globalLastCalledApi = '/api/progress'
+	switchOff()
+	data = request.get_data(as_text=True)
+	content = json.loads(jsmin(data))
 	brightness = content.get('brightness', None)
 	speed = content.get('speed', None)
 	blinkThread = threading.Thread(target=displayRainbow, args=(brightness, speed, None))
