@@ -9,6 +9,7 @@ class Unicorn {
 
   init() {
     this.types.forEach((type) => this.emitter.on(type, () => console.log(type)))
+    exec(`sudo python3 ${__dirname}/../unicorn/demo.py`)
   }
 }
 
