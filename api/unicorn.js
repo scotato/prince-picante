@@ -3,7 +3,7 @@ const { exec } = require('child_process')
 class Unicorn {
   constructor({ emitter }) {
     this.emitter = emitter
-    this.types = ['busy', 'rainbow']
+    this.types = ['progress']
     this.init()
   }
 
